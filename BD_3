@@ -1,0 +1,72 @@
+--  1.Вивести всі можливі пари рядків викладачів та груп.
+
+
+SELECT
+    t.id AS teacher_id,
+    t.name AS teacher_name,
+    g.id AS group_id,
+    g.name AS group_name
+FROM
+    teachers t
+CROSS JOIN
+    groups g;
+
+
+-- 2.Вивести прізвища викладачів та назви факультетів, на яких вони читають лекції.
+
+SELECT
+    t.surname AS teacher_surname,
+    f.name AS faculty_name
+FROM
+    teachers t
+JOIN
+    lectures l ON t.id = l.teacherid
+JOIN
+    subjects s ON l.subjectid = s.id
+JOIN
+    departments d ON s.id = d.id 
+JOIN
+    faculties f ON d.facultyid = f.id;
+
+
+-- 3. Вивести назви кафедр та назви груп, які до них належать.
+
+
+
+SELECT
+    d.name AS department_name,
+    g.name AS group_name
+FROM
+    departments d
+JOIN
+    groups g ON d.id = g.departmentid;
+
+
+-- 4. Вивести назви груп 5-го курсу, а також назву факультетів,до яких вони належать.
+
+SELECT
+    g.name AS group_name,
+    f.name AS faculty_name
+FROM
+    groups g
+JOIN
+    departments d ON g.departmentid = d.id
+JOIN
+    faculties f ON d.facultyid = f.id
+WHERE
+    g.year = 5;
+
+
+-- 5. Вивести назви дисциплін, які читає викладач “Samantha Adams”.
+
+
+SELECT
+    s.name AS subject_name
+FROM
+    teachers t
+JOIN
+    lectures l ON t.id = l.teacherid
+JOIN
+    subjects s ON l.subjectid = s.id
+WHERE
+    t.name = 'Samantha' AND t.surname = 'Adams';
